@@ -26,8 +26,9 @@ def hide(filename, message):
                 newData.append(item) 
         
         img.putdata(newData)
-        img.save(filename, "PNG")
-        return newData
+        f = open("image.png", "w")
+        f.write(img)
+        return f
     
     return False # incorrect image mode, couldn't hide
 
