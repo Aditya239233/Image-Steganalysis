@@ -1,10 +1,20 @@
-import './App.css';
+/* eslint-disable react/jsx-pascal-case */
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { BrowserRouter, Route } from "react-router-dom";
+import Navbar_ from "./components/navbar";
+import Encrypt from "./components/encrypt";
+import Decrypt from "./components/decrypt";
 
 function App() {
   return (
-    <div className="App">
-      <div className="App-header">
-        Image Steganalysis
+    <div>
+      <Navbar_ />
+      <div className="body">
+        <BrowserRouter>
+          <Route exact path="/encrypt" component={Encrypt} />
+          <Route exact path="/decrypt" component={Decrypt} />
+        </BrowserRouter>
       </div>
     </div>
   );
