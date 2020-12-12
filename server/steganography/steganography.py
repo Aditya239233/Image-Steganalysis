@@ -1,4 +1,4 @@
-from server.steganography.utils import *
+from steganography.utils import *
 from PIL import Image
 
 def hide(filename, message):
