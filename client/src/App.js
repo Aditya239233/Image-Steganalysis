@@ -5,6 +5,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 import Navbar_ from "./components/navbar";
 import Encrypt from "./components/encrypt";
 import Decrypt from "./components/decrypt";
+import Dashboard from "./components/dashboard";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Navbar_ />
       <div className="body">
         <BrowserRouter>
+          <Route exact path="/" component={Dashboard} />
           <Route exact path="/encrypt" component={Encrypt} />
           <Route exact path="/decrypt" component={Decrypt} />
         </BrowserRouter>
