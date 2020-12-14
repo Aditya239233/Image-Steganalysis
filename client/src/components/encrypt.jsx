@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 import { Row, Col } from "react-bootstrap";
 
 class Encrypt extends Component {
@@ -13,10 +12,18 @@ class Encrypt extends Component {
 
   hide = (e) => {
     e.preventDefault();
-    console.log(this.state.image);
-    axios
-      .get("/encrypt" + this.state.image + "/" + this.state.message)
-      .then((res) => {
+
+    const data = new FormData();
+    data.append("image", this.state.image);
+    data.append("message", this.state.message);
+    fetch("http://localhost:5000/encrypt", {
+      method: "POST",
+      body: data,
+      type: "application/json",
+    }).then((res) => {
+      if (res.data.value === false) {
+        alert("There was an internal error! Try Again Later");
+      } else {
         res.blob().then((blob) => {
           let url = window.URL.createObjectURL(blob);
           let a = document.createElement("a");
@@ -24,7 +31,8 @@ class Encrypt extends Component {
           a.download = "image.png";
           a.click();
         });
-      });
+      }
+    });
   };
 
   render() {

@@ -1,5 +1,6 @@
 from steganography.utils import *
 from PIL import Image
+import os
 
 def hide(filename, message):
     img = Image.open(filename)
@@ -26,10 +27,11 @@ def hide(filename, message):
                 newData.append(item) 
         
         img.putdata(newData)
-        f = open("image.png", "w")
-        f.write(img)
-        return f
-    
+        os.remove(filename)
+        
+        return img
+
+    print("failed")
     return False # incorrect image mode, couldn't hide
 
 def retrieve(filename):
