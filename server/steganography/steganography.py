@@ -1,4 +1,4 @@
-from steganography.utils import *
+from utils import *
 from PIL import Image
 import os
 
@@ -27,8 +27,7 @@ def hide(filename, message):
                 newData.append(item) 
         
         img.putdata(newData)
-        os.remove(filename)
-        
+        img.save("steganography/image.png")
         return img
 
     print("failed")
@@ -49,7 +48,7 @@ def retrieve(filename):
                 continue
             else:
                 binary += digit
-                if binary[-16:] == '1111111111111110':
+                if binary[-16:] == '111111111111110':
                     return bin2str(binary[:-16])
         return bin2str(binary)
     return False

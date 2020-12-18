@@ -9,18 +9,23 @@ CORS(app)
 @app.route("/encrypt", methods=["POST"])
 def encrypt():
     f = request.files['image'] 
-    message = "Hello world"
+    message = request.form.get("message")
     filename = secure_filename("image.png")
     destination="/".join(["steganography", filename])
     f.save(destination)
     image = hide(destination, message)
-    if type(image) == bool:
-        return image
-    return send_file(image, mimetype='image/gif')
+    if type(image) == bool or image == None:
+        return False
+    return send_file("./steganography/image.png", mimetype='image/gif')
 
-@app.route("/decrypt/<image>", methods=["GET"])
-def decrypt(image = None):
-    message = retrieve(image)
+@app.route("/decrypt", methods=["POST"])
+def decrypt():
+    f = request.files['image']
+    filename = secure_filename("image.png")
+    destination="/".join(["steganography", filename])
+    f.save(destination)
+    message = retrieve(destination)
+    print(message)
     return message
 
 @app.route("/")

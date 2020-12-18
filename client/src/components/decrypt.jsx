@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
 import { Row, Col } from "react-bootstrap";
 
 class Decrypt extends Component {
@@ -7,23 +6,34 @@ class Decrypt extends Component {
     super(props);
     this.state = {
       image: null,
-      message: "Hidden Message Will be displayed here",
+      message: "",
     };
   }
 
   retrive = (e) => {
     e.preventDefault();
-    axios.get("/decrypt" + this.state.image).then((res) => {
-      if (res.data != null) this.message = res.data;
-      else this.message = "No hidden Message!!";
-    });
+    const data = new FormData();
+    data.append("image", this.state.image);
+
+    fetch("/decrypt", {
+      method: "POST",
+      body: data,
+      type: "application/json",
+    })
+      .then(async res => {
+        const data = await res.json();
+        console.log(data)
+      })
+      .catch((e) => {
+        this.setState({ message: "Error" });
+      });
   };
 
   render() {
     return (
       <div className="center">
         <Col>
-          <form>
+          <form onSubmit={this.retrive}>
             <Row>
               <input
                 type="file"
@@ -42,7 +52,8 @@ class Decrypt extends Component {
             <textarea
               type="text"
               required
-              placeholder={this.state.message}
+              placeholder="Hidden Message Will be displayed here"
+              value={this.state.message}
               style={{ height: "100px", width: "550px" }}
               readOnly
             ></textarea>

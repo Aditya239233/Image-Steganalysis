@@ -16,22 +16,23 @@ class Encrypt extends Component {
     const data = new FormData();
     data.append("image", this.state.image);
     data.append("message", this.state.message);
-    fetch("http://localhost:5000/encrypt", {
+    fetch("/encrypt", {
       method: "POST",
       body: data,
       type: "application/json",
     }).then((res) => {
-      if (res.data.value === false) {
-        alert("There was an internal error! Try Again Later");
-      } else {
-        res.blob().then((blob) => {
+      res
+        .blob()
+        .then((blob) => {
           let url = window.URL.createObjectURL(blob);
           let a = document.createElement("a");
           a.href = url;
           a.download = "image.png";
           a.click();
+        })
+        .catch((e) => {
+          alert("Internl Error!");
         });
-      }
     });
   };
 
