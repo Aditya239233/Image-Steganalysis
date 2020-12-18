@@ -1,4 +1,4 @@
-from flask import Flask, request, send_file
+from flask import Flask, request, send_file, jsonify
 from steganography.steganography import hide, retrieve
 from werkzeug.utils import secure_filename
 from flask_cors import CORS
@@ -16,7 +16,7 @@ def encrypt():
     image = hide(destination, message)
     if type(image) == bool or image == None:
         return False
-    return send_file("./steganography/image.png", mimetype='image/gif')
+    return send_file(destination, mimetype='image/gif')
 
 @app.route("/decrypt", methods=["POST"])
 def decrypt():
@@ -25,8 +25,8 @@ def decrypt():
     destination="/".join(["steganography", filename])
     f.save(destination)
     message = retrieve(destination)
-    print(message)
-    return message
+    message = message.decode("utf-8") 
+    return jsonify(message)
 
 @app.route("/")
 def main():

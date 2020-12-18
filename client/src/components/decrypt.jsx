@@ -20,9 +20,9 @@ class Decrypt extends Component {
       body: data,
       type: "application/json",
     })
-      .then(async res => {
+      .then(async (res) => {
         const data = await res.json();
-        console.log(data)
+        this.setState({ message: data });
       })
       .catch((e) => {
         this.setState({ message: "Error" });

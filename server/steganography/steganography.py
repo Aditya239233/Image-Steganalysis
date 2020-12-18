@@ -1,6 +1,5 @@
-from utils import *
+from steganography.utils import *
 from PIL import Image
-import os
 
 def hide(filename, message):
     img = Image.open(filename)
@@ -27,10 +26,9 @@ def hide(filename, message):
                 newData.append(item) 
         
         img.putdata(newData)
-        img.save("steganography/image.png")
-        return img
-
-    print("failed")
+        img.save(filename, "PNG")
+        return newData
+    
     return False # incorrect image mode, couldn't hide
 
 def retrieve(filename):
@@ -48,7 +46,7 @@ def retrieve(filename):
                 continue
             else:
                 binary += digit
-                if binary[-16:] == '111111111111110':
+                if binary[-16:] == '1111111111111110':
                     return bin2str(binary[:-16])
         return bin2str(binary)
     return False
