@@ -5,6 +5,8 @@ A Web Application to hide secret messages inside images and retrieve embedded da
 ## Steganography
 Steganography is the technique of hiding secret data within an ordinary, non-secret, file or message in order to avoid detection. The use of steganography can be combined with encryption as an extra step for hiding or protecting data. 
 
+![Steganography](./assets/image.png)
+
 ## How it works
 
 1. Hide a secret message inside an Image
@@ -30,7 +32,7 @@ cd server
 pip install -r requirements.txt
 python server.py
 ```
-## Drawbacks
+## Note
 This app currently works only for PNG images.
 
 ## Resources 
